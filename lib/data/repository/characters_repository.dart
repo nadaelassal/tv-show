@@ -1,0 +1,14 @@
+import 'package:tv_show/data/models/characters.dart';
+import 'package:tv_show/data/web_services/characters_web_services.dart';
+
+class CharactersRepository {
+  final CharactersWebServices charactersWebServices;
+
+  CharactersRepository({required this.charactersWebServices});
+  Future<List<dynamic>> getAllCharacters() async {
+    final characters = await charactersWebServices.getAllCharacters();
+    return characters
+        .map((character) => Character.fromJson(character))
+        .toList();
+  }
+}
