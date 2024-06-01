@@ -16,8 +16,7 @@ class TvShowApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: appRouter.generteRoute,
-    );
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: appRouter.generteRoute);
   }
 }

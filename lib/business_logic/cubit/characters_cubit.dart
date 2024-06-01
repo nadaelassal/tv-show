@@ -7,13 +7,15 @@ part 'characters_state.dart';
 
 class CharactersCubit extends Cubit<CharactersState> {
   final CharactersRepository charactersRepository;
-  late List<Character> characters;
+  List<Character> characters = [];
   CharactersCubit(this.charactersRepository) : super(CharactersInitial());
 
+//get data from repository
   List<Character> getAllCharacters() {
-    charactersRepository.getAllCharacters().then((charaters) {
-      emit(CharactersLoaded(charaters));
-      this.characters = charaters;
+    charactersRepository.getAllCharacters().then((characters) {
+      emit(CharactersLoaded(
+          characters)); //emit -> emit state (character state ->characters loaded) -> send to ui
+      this.characters = characters;
     });
     return characters;
   }

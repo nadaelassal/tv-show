@@ -18,6 +18,7 @@ class AppRouter {
     charactersCubit = CharactersCubit(charactersRepository);
   }
 
+  // ignore: body_might_complete_normally_nullable
   Route? generteRoute(RouteSettings settings) {
     switch (settings.name) {
       case charactersScreen:

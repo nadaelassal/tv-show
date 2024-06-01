@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:tv_show/constants/strings.dart';
 
+//Dio handling
 class CharactersWebServices {
   late Dio dio;
 
@@ -15,9 +16,10 @@ class CharactersWebServices {
     );
     dio = Dio(options);
   }
+  //web services call
   Future<List<dynamic>> getAllCharacters() async {
     try {
-      Response response = await dio.get('characters');
+      Response response = await dio.get('character');
       print(response.data.toString());
       return response.data;
     } catch (e) {
