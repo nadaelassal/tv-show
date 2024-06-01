@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:tv_show/constants/strings.dart';
+import 'package:tv_show/data/models/characters.dart';
 
 //Dio handling
 class CharactersWebServices {
@@ -17,13 +18,27 @@ class CharactersWebServices {
     dio = Dio(options);
   }
   //web services call
-  Future<List<dynamic>> getAllCharacters() async {
+  Future<List<Character>> getAllCharacters() async {
+    Dio dio = Dio();
+
+    // The URL you want to request
+    String url = 'https://rickandmortyapi.com/api/character';
+
     try {
-      Response response = await dio.get('character');
-      print(response.data.toString());
-      return response.data;
+      // Make the GET request
+      Response response = await dio.get(url);
+
+      // Print the response data
+      print('Response data: hello  ${response.data}');
+
+      List<dynamic> results = response.data['results'];
+      List<Character> characters =
+          results.map((json) => Character.fromJson(json)).toList();
+
+      return characters;
     } catch (e) {
-      print(e.toString());
+      // Print the error if something went wrong
+      print('Error: $e');
       return [];
     }
   }
