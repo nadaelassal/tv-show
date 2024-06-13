@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:tv_show/business_logic/cubit/characters_cubit.dart';
 import 'package:tv_show/constants/mycolors.dart';
 import 'package:tv_show/data/models/characters.dart';
@@ -163,6 +164,20 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
+Widget buildNoInternetWidget () {
+  return Center(
+child: Container(
+  color: Colors.white,
+  child: Column(
+    children: [
+      SizedBox(height: 20,),
+      Text('Check your Internet connection'),
+      Image.asset('assets/images/no_internet.png'),
+    ],
+  ),
+),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,7 +186,21 @@ class _CharactersScreenState extends State<CharactersScreen> {
         title: _isSearching ? _buildSearchFeild() : _buildAppBarTitle(),
         actions: _buildAppBarActions(),
       ),
-      body: buildBlocWidget(),
+      body: OfflineBuilder(
+        connectivityBuilder: (
+          BuildContext context,
+          ConnectivityResult connectivity,
+          Widget child,
+        ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          if (connected) {
+            return buildBlocWidget();
+          } else {
+            return buildNoInternetWidget();
+          }
+        },
+        child: showLoadingIndicator(),
+      ),
     );
   }
 }
